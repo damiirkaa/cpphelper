@@ -38,6 +38,24 @@
 			"Для установки значения по умолчанию параметру присваивается это значение int m = 3. И если для второго параметра не будет передано значение, то он будет использовать значение по умолчанию. Консольный вывод программы: \n<b>n * m = 20 \nn * m = 12",
 			"При объявлении прототипа подобной функции он тоже может содержать значение по умолчанию для параметра. И в этом случае мы можем не определять в функции значение по умолчанию для параметра - оно будет браться из прототипа: \n<code>#include &lt;iostream&gt; \nvoid multiply(int n, int m=3); \nint main() \n{ \nmultiply(4, 5); \nmultiply(4); \nreturn 0; \n} \nvoid multiply(int n, int m) \n{ \nint result = n * m; \nstd::cout &lt;&lt; 'n * m = ' &lt;&lt; result &lt;&lt; std::endl; \n}</code>"
 		]
-	}
-
-}
+	},
+	"arguments_by_value/links":{
+		"name":"arguments_by_value"
+		"page_1":[
+			"Arguments can be passed by value and by reference. When passing arguments by value, the external object that is passed as an argument to a function cannot be modified in that function. The value of this object is passed to the function. For example:"
+			"<code>#include &lt;iostream&gt; /nvoid square(int, int); /nint main() /n{ /nint a = 4; /nint b = 5; /n std::cout &lt;&lt; Before square: a = " &lt;&lt; a &lt;&lt; "\tb=" &lt;&lt; b &lt;&lt; std::endl; /nsquare(a, b); /nstd::cout &lt;&lt; "After square: a = " &lt;&lt; a &lt;&lt; "\tb=" &lt;&lt; b &lt;&lt; std::endl; /nreturn 0; /n} /nvoid square(int a, int b) /n{ /na = a * a;  /nb = b * b; /nstd::cout &lt;&lt; "In square: a = " &lt;&lt; a &lt;&lt; "\tb=" &lt;&lt; b &lt;&lt; std::endl; /n} /n}",
+			"The square function takes two numbers and squares them. In the main function, before and after the execution of the square function, the values of the variables a and b are printed to the console, which are passed to square as arguments.",
+			"And when we run, we will see that the changes to the arguments in the square function only take effect within that function. Outside of it, the values of the variables a and b remain unchanged:",
+			"<b>Before square: a = 4 	b = 5 /nIn square: a = 16		b = 25 /n	After square: a = 4 	b = 5</b>",
+			"Why it happens? When compiling a function, separate sections of memory are allocated for its parameters. When the function is called, the values of the arguments are calculated, which are passed in place of the parameters. And then the values of the arguments are entered into these memory chunks. That is, the function manipulates copies of the values of objects, not the objects themselves.".
+		"name":"arguments_by_links,
+		"page_1":[
+			"When passing parameters by reference, a reference to the object is passed through which we can manipulate the objects themselves, and not just its value. So, let's rewrite the previous example using pass by reference:",
+			"<code>#include <iostream> /nvoid square(int&, int&); /nint main() /n{ /nint a = 4; /nint b = 5; /nstd::cout &lt;&lt; Before square: a = " &lt;&lt; a &lt;&lt; "\tb=" &lt;&lt; b &lt;&lt; std::endl; /nsquare(a, b); .nstd::cout &lt;&lt;"After square: a = " << a << "\tb=" << b << std::endl; /nreturn 0; /n} /nvoid square(int &a, int &b) /n{ /na = a * a; /nb = b * b; /nstd::cout << "In square: a = " << a << "\tb=" << b << std::endl; /n}",
+			"Now parameters a and b are passed by reference. The reference parameter is linked directly to the object, so the object itself can be changed through the reference.And if we compile and run the program, the result will be different:",
+			"<b>Before square: a = 4 	b = 5 /nIn square: a = 16		b = 25 /nAfter square: a = 16 	b = 25</b>",
+			"Passing by reference allows you to return multiple values from a function at once. Also, passing parameters by reference is more efficient when passing very large objects. Since in this case there is no copying of &lt;&lt;lues, and the function uses the object itself, not its value.Passing arguments by reference should be distinguished from passing references as arguments:",
+			"<code>#include <iostream> /nvoid square(int, int); /nint main() /n{ /nint a = 4; /nint b = 5; /nint &aRef = a; /nint &bRef = b; /nstd::cout &lt;&lt; Before square: a = " &lt;&lt; a &lt;&lt; "\tb=" &lt;&lt; b &lt;&lt; std::endl; /nsquare(aRef, bRef); /nstd::cout << "After square: a = " &lt;&lt; &lt;&lt; "\tb=" << b << std::endl; /nreturn 0; /n} /nvoid square(int a, int b) /n{ /na = a * a; /nb = b * b; /nstd::cout << "In square: a = " << a << "\tb=" << b << std::endl; /n}",
+			"If a function takes arguments by value, then changing parameters inside the function will also have no effect on external objects, even if object references are passed to it when the function is called.",
+			"Before square: a = 4 	b = 5 /nIn square: a = 16		b = 25 /nAfter square: a = 4 	b = 5;",
+			"Passing parameters by value is more suitable for passing small objects to a function, the values of which are copied to certain areas of memory, which are then used by the function. Passing parameters by reference is more suitable for passing large objects to a function; in this case, you do not need to copy the entire contents of the object into a memory location, which increases the performance of the program.".
